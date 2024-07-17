@@ -14,8 +14,12 @@ class LaravelBasicAuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/config.php',
+            __DIR__ . '/../config/config-laravel-basic-auth.php',
             'laravel-basic-auth'
+        );
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/config-laravel-basic-cors.php',
+            'laravel-basic-cors'
         );
     }
 

@@ -33,11 +33,12 @@ class BasicAuthWithCors
             ->header('Access - Control - Allow - Headers', 'Content - Type, Authorization');
     }
 
-    protected function errorResponse(Request $request)
+    protected function errorResponse(Request $request, $method = '')
     {
         $response = [
             'error' => 'Cors Error',
-            'origin' => $request->header('Origin') ?? null
+            'origin' => $request->header('Origin') ?? null,
+            'method' => $method
         ];
         return response()->json($response, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -74,6 +75,6 @@ class BasicAuthWithCors
             }
         }
 
-        return $this->errorResponse($request);
+        return $this->errorResponse($request, 'BasicAuthWithCors::handle');
     }
 }

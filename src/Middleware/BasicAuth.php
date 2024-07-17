@@ -10,10 +10,11 @@ use nguyenanhung\Laravel\BasicAuth\Helper\Helper;
 
 class BasicAuth
 {
-    protected array $defaultWhitelist = [
+    protected $forceEnabled = false;
+    protected $defaultWhitelist = [
         '127.0.0.1',
     ];
-    protected array $defaultEnvUseBasicAuth = [
+    protected $defaultEnvUseBasicAuth = [
         'beta',
         'staging',
         'test',
@@ -28,7 +29,7 @@ class BasicAuth
      */
     protected function promptForBasicAuthCredentials(Request $request)
     {
-        Log::info('BasicAuthCredentials::Failed', [
+        Log::info('Laravel::BasicAuthCredentials::Failed', [
             'request_ip' => $request->ip() ?? null,
             'request_method' => $request->method() ?? '',
             'request_full_url' => $request->fullUrl() ?? '',
@@ -54,7 +55,9 @@ class BasicAuth
         $envUseBasicAuth = $this->defaultEnvUseBasicAuth;
         $appENV = config('app.env');
         $isEnabled = config('laravel-basic-auth.enabled');
-
+        if ($this->forceEnabled === true) {
+            $isEnabled = $this->forceEnabled;
+        }
         // Enable basic authentication for Production environments
         $isEnabledInProduction = config('laravel-basic-auth.in_production');
         if ($isEnabled === true && $isEnabledInProduction === true) {

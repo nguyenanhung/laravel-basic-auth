@@ -1,0 +1,41 @@
+{
+  "type": "library",
+  "name": "nguyenanhung/laravel-basic-auth",
+  "description": "Basic Auth for Laravel - Basic, Simple and Lightweight",
+  "keywords": [
+    "laravel",
+    "basic auth",
+    "helper",
+    "library",
+    "php"
+  ],
+  "homepage": "https://github.com/nguyenanhung/laravel-basic-auth",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Nguyen An Hung",
+      "email": "dev@nguyenanhung.com",
+      "homepage": "https://nguyenanhung.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.0"
+  },
+  "require-dev": {
+    "laravel/framework": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "nguyenanhung\\Laravel\\BasicAuth\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "nguyenanhung\\Laravel\\BasicAuth\\LaravelBasicAuthServiceProvider"
+      ]
+    }
+  }
+}

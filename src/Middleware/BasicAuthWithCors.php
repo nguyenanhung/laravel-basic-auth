@@ -3,7 +3,6 @@
 namespace nguyenanhung\Laravel\BasicAuth\Middleware;
 
 use Closure;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,7 +33,7 @@ class BasicAuthWithCors
             ->header('Access - Control - Allow - Headers', 'Content - Type, Authorization');
     }
 
-    protected function errorResponse(): JsonResponse
+    protected function errorResponse()
     {
         $response = [
             'error' => 'Cors Error'

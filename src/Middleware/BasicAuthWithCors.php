@@ -4,10 +4,17 @@ namespace nguyenanhung\Laravel\BasicAuth\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use nguyenanhung\Laravel\BasicAuth\Helper\Helper;
 use Symfony\Component\HttpFoundation\Response;
 
 class BasicAuthWithCors
 {
+    use AcceptRestfulTrait;
+
+    protected $defaultWhitelist = [
+        '127.0.0.1',
+    ];
     protected $addDomainPassCors = [];
     protected $defaultDomainPassCors = [
         'localhost.test'
@@ -23,14 +30,6 @@ class BasicAuthWithCors
         $domain = str_replace('.', '\.', $domain);
         $domain = trim($domain);
         return '/^(https?:\/\/)?([a-zA-Z0-9-]+\.)*' . $domain . '\/?/';
-    }
-
-    protected function acceptRequestRestful($origin, Request $request, Closure $next)
-    {
-        return $next($request)
-            ->header('Access - Control - Allow - Origin', $origin)
-            ->header('Access - Control - Allow - Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->header('Access - Control - Allow - Headers', 'Content - Type, Authorization');
     }
 
     protected function errorResponse(Request $request, $method = '')
@@ -53,6 +52,29 @@ class BasicAuthWithCors
         $origin = $request->header('Origin');
         $defaultListDomainCors = $this->defaultDomainPassCors;
 
+        // Accept with Whitelist IPS
+        $enabledWhitelistIP = config('laravel-basic-cors.enabled_list_ips');
+        if ($enabledWhitelistIP === true) {
+            $defaultWhitelist = $this->defaultWhitelist;
+            $allowedIP = false;
+
+            // Merge default whitelist with whitelist from .env
+            $envWhitelist = config('laravel-basic-cors.white_list_ips');
+            if (!empty($envWhitelist)) {
+                $envWhitelist = explode(',', $envWhitelist);
+                $whitelist = array_merge($defaultWhitelist, $envWhitelist);
+            } else {
+                $whitelist = $defaultWhitelist;
+            }
+            $clientIP = $request->ip();
+            if (in_array($clientIP, $whitelist)) {
+                $allowedIP = true;
+            }
+            if ($allowedIP === true) {
+                return $this->acceptRequestRestful($origin, $request, $next);
+            }
+        }
+
         // Add from Config
         $acceptCorsUrl = config('laravel-basic-cors.accept_from_url');
         if (!empty($acceptCorsUrl)) {
@@ -74,7 +96,14 @@ class BasicAuthWithCors
                 return $this->acceptRequestRestful($origin, $request, $next);
             }
         }
-
+        Log::info('Laravel::BasicAuthWithCors::Failed', [
+            'request_origin' => $origin,
+            'accept_origin' => $listDomainCors,
+            'request_ip' => $request->ip() ?? null,
+            'request_method' => $request->method() ?? '',
+            'request_full_url' => $request->fullUrl() ?? '',
+            'request_client_info' => Helper::requestServerInfo()
+        ]);
         return $this->errorResponse($request, 'BasicAuthWithCors::handle');
     }
 }

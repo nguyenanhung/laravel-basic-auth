@@ -21,6 +21,10 @@ class LaravelBasicAuthServiceProvider extends ServiceProvider
             __DIR__ . '/../config/config-laravel-basic-cors.php',
             'laravel-basic-cors'
         );
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/config-laravel-basic-whitelist-ip.php',
+            'laravel-basic-whitelist-ip'
+        );
     }
 
     /**

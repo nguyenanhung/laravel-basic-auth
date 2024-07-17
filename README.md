@@ -4,6 +4,12 @@
 
 Simple Basic Authentication for Laravel
 
+## Supported methods
+
+-[x] Authentication with Basic Authentication
+-[x] Authentication with Cors
+-[x] Authentication with Whitelist IP
+
 ## Contact & Support
 
 If any question & request, please contact following information

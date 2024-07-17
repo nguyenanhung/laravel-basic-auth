@@ -10,6 +10,8 @@ use nguyenanhung\Laravel\BasicAuth\Helper\Helper;
 
 class BasicAuth
 {
+    use AcceptRestfulTrait;
+
     protected $forceEnabled = false;
     protected $defaultWhitelist = [
         '127.0.0.1',

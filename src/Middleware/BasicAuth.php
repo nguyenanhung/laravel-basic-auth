@@ -10,7 +10,7 @@ use nguyenanhung\Laravel\BasicAuth\Helper\Helper;
 
 class BasicAuth
 {
-    use AcceptRestfulTrait;
+    use AcceptRestfulTrait, SupportTrait;
 
     protected $forceEnabled = false;
     protected $defaultWhitelist = [
@@ -31,16 +31,19 @@ class BasicAuth
      */
     protected function promptForBasicAuthCredentials(Request $request)
     {
-        Log::info('Laravel::BasicAuthCredentials::Failed', [
-            'request_ip' => $request->ip() ?? null,
-            'request_method' => $request->method() ?? '',
-            'request_full_url' => $request->fullUrl() ?? '',
-            'request_client_info' => Helper::requestServerInfo(),
-            'request_auth' => [
-                'PHP_AUTH_USER' => $_SERVER['PHP_AUTH_USER'] ?? null,
-                'PHP_AUTH_PW' => $_SERVER['PHP_AUTH_PW'] ?? null,
-            ]
-        ]);
+        if ($this->checkWriteLog() === true) {
+            Log::info('Laravel::BasicAuthCredentials::Failed', [
+                'request_ip' => $request->ip() ?? null,
+                'request_method' => $request->method() ?? '',
+                'request_full_url' => $request->fullUrl() ?? '',
+                'request_client_info' => Helper::requestServerInfo(),
+                'request_auth' => [
+                    'PHP_AUTH_USER' => $_SERVER['PHP_AUTH_USER'] ?? null,
+                    'PHP_AUTH_PW' => $_SERVER['PHP_AUTH_PW'] ?? null,
+                ]
+            ]);
+        }
+
         return response('Authentication required.', Response::HTTP_UNAUTHORIZED)
             ->header('WWW-Authenticate', 'Basic realm="Restricted Area"');
     }

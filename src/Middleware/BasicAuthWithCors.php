@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BasicAuthWithCors
 {
-    use AcceptRestfulTrait;
+    use AcceptRestfulTrait, SupportTrait;
 
     protected $defaultWhitelist = [
         '127.0.0.1',
@@ -96,14 +96,16 @@ class BasicAuthWithCors
                 return $this->acceptRequestRestful($origin, $request, $next);
             }
         }
-        Log::info('Laravel::BasicAuthWithCors::Failed', [
-            'request_origin' => $origin,
-            'accept_origin' => $listDomainCors,
-            'request_ip' => $request->ip() ?? null,
-            'request_method' => $request->method() ?? '',
-            'request_full_url' => $request->fullUrl() ?? '',
-            'request_client_info' => Helper::requestServerInfo()
-        ]);
+        if ($this->checkWriteLog() === true) {
+            Log::info('Laravel::BasicAuthWithCors::Failed', [
+                'request_origin' => $origin,
+                'accept_origin' => $listDomainCors,
+                'request_ip' => $request->ip() ?? null,
+                'request_method' => $request->method() ?? '',
+                'request_full_url' => $request->fullUrl() ?? '',
+                'request_client_info' => Helper::requestServerInfo()
+            ]);
+        }
         return $this->errorResponse($request, 'BasicAuthWithCors::handle');
     }
 }

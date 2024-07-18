@@ -29,7 +29,10 @@
   "autoload": {
     "psr-4": {
       "nguyenanhung\\Laravel\\BasicAuth\\": "src/"
-    }
+    },
+    "files": [
+      "helpers/helpers.php"
+    ]
   },
   "extra": {
     "laravel": {

@@ -1,4 +1,9 @@
-[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/laravel-basic-auth/v)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth) [![Total Downloads](http://poser.pugx.org/nguyenanhung/laravel-basic-auth/downloads)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/laravel-basic-auth/v/unstable)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth) [![License](http://poser.pugx.org/nguyenanhung/laravel-basic-auth/license)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/laravel-basic-auth/require/php)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth)
+[![Latest Stable Version](https://img.shields.io/packagist/v/nguyenanhung/laravel-basic-auth.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth)
+[![Total Downloads](https://img.shields.io/packagist/dt/nguyenanhung/laravel-basic-auth.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth)
+[![Daily Downloads](https://img.shields.io/packagist/dd/nguyenanhung/laravel-basic-auth.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/nguyenanhung/laravel-basic-auth.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth)
+[![License](https://img.shields.io/packagist/l/nguyenanhung/laravel-basic-auth.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth)
+[![PHP Version Require](https://img.shields.io/packagist/dependency-v/nguyenanhung/laravel-basic-auth/php)](https://packagist.org/packages/nguyenanhung/laravel-basic-auth)
 
 # Laravel Basic Authentication
 
